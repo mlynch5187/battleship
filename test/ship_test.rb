@@ -32,17 +32,14 @@ class ShipTest < MiniTest::Test
     @cruiser.hit
     assert_equal 2, @cruiser.health
   end
-end
 
-# pry(main)> cruiser.hit
-#
-# pry(main)> cruiser.health
-# #=> 1
-#
-# pry(main)> cruiser.sunk?
-# #=> false
-#
-# pry(main)> cruiser.hit
-#
-# pry(main)> cruiser.sunk?
-# #=> true
+  def test_ship_sinks_when_health_reaches_zero
+    @cruiser.hit
+    assert_equal 2, @cruiser.health
+    @cruiser.hit
+    assert_equal 1, @cruiser.health
+    @cruiser.hit
+    assert_equal 0, @cruiser.health
+    assert_equal true, @cruiser.sunk?
+  end
+end
