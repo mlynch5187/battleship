@@ -6,6 +6,7 @@ require './lib/ship'
 class CellTest < Minitest::Test
   def setup
     @cell = Cell.new("B4")
+    @cruiser = Ship.new("Cruiser", 3)
   end
 
   def test_it_exists
@@ -17,17 +18,14 @@ class CellTest < Minitest::Test
     assert_equal true, @cell.empty?
   end
 
+  def test_it_can_place_ship
+    @cell.place_ship(@cruiser)
+    assert_equal @cruiser, @cell.ship
+  end
+
+  def test_cell_is_not_empty_after_placing_ship
+    @cell.place_ship(@cruiser)
+    assert_equal false, @cell.empty?
+  end
+  
 end
-
-
-#
-# pry(main)> cruiser = Ship.new("Cruiser", 3)
-# # => #<Ship:0x00007f84f0891238...>
-#
-# pry(main)> cell.place_ship(cruiser)
-#
-# pry(main)> cell.ship
-# # => #<Ship:0x00007f84f0891238...>
-#
-# pry(main)> cell.empty?
-# # => false
