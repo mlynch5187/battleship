@@ -6,7 +6,8 @@ Goals and Expectations for the Project (What does each group member hope to get 
 
 Alex - I hope to gain a better understanding of class interaction and visually oriented programming. The first time I worked on this project I was very confused and I am excited to see how my programming "muscles" have developed.
 
-Colin -
+Colin - Class interaction and scope, learned alot and struggled alot in Flash_Cards.
+Looking forward to strengthen this knowledge.
 
 Team strengths & collaboration styles (consider discussing your Pairin qualities here):
 
@@ -20,7 +21,7 @@ Schedule Expectations (When are we available to work together and individually? 
 
 Alex - I am available to work together every day before 7PM at night.
 
-Colin -
+Colin - I am available sometimes in the AM, but most often after class until 8pm.
 
 Communication Expectations (How and often will we communicate? How do we keep lines of communication open? How will we make decisions as a team?):
 
@@ -30,11 +31,12 @@ Abilities & Growth Expectations (Technical strengths and areas for desired impro
 
 Alex - I am a repeater so I bring the strength of familiarity with the project to the table. I hope to improve on my understanding of setting up the board class.
 
-Colin -
+Colin - Confidence with classes and scope, as well as the board grid functionality,
+as well as possible uses with that functionality.
 
 Workload Expectations (What features do we each want to work on?):
 
-For the the bulk of the project we will work together side by side or through zoom to simultaneously contribute to the project. We may also contribute individually on our own, utilizing branches and detailed pull requests on Github to advance the project.
+For the the bulk of the project we will work together side by side or through zoom to simultaneously contribute to the project in driver/navigator or ping-pong fashion. We may also contribute individually on our own, utilizing branches and detailed pull requests on Github to advance the project.
 
 Workflow Expectations (Git workflow/Tools/Code Review/Reviewing Pull Requests/Debugging and Problem-solving Techniques):
 
