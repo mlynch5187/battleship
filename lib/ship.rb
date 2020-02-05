@@ -3,7 +3,7 @@ class Ship
   def initialize(name, health)
     @name = name
     @health = 3
-    @length = 3
+    @length = health
   end
 
   def sunk?
