@@ -7,6 +7,7 @@ class CellTest < Minitest::Test
   def setup
     @cell = Cell.new("B4")
     @cruiser = Ship.new("Cruiser", 3)
+    @board = Board.new
   end
 
   def test_it_exists
