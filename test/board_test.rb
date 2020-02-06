@@ -31,10 +31,10 @@ class BoardTest < MiniTest::Test
   end
 
   def test_that_ships_must_take_up_as_many_coordinates_as_their_length
-      assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
-      assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
-      assert_equal true, @board.valid_placement?(@submarine, ["A2", "A3"])
-      assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
+    assert_equal true, @board.valid_placement?(@submarine, ["A2", "A3"])
+    assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
   end
 end
 # First, the number of coordinates in the array should be the same as the length of the ship:
