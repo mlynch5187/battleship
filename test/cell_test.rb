@@ -7,6 +7,7 @@ require './lib/board'
 class CellTest < Minitest::Test
   def setup
     @cell_1 = Cell.new("B4")
+    @cell_2 = Cell.new("C3")
     @cruiser = Ship.new("Cruiser", 3)
     @board = Board.new
   end
@@ -49,34 +50,22 @@ class CellTest < Minitest::Test
 
   def test_cell_can_be_rendered
     assert_equal ".", @cell_1.render
-  end
-
-  def test_cell_renders_m_when_fired_upon_and_misses
     @cell_1.fire_upon
     assert_equal "M", @cell_1.render
   end
 
-#   pry(main)> cell_1 = Cell.new("B4")
-# # => #<Cell:0x00007f84f11df920...>
-#
-# pry(main)> cell_1.render
-# # => "."
-#
-# pry(main)> cell_1.fire_upon
-#
-# pry(main)> cell_1.render
-# # => "M"
-#
-# pry(main)> cell_2 = Cell.new("C3")
-# # => #<Cell:0x00007f84f0b29d10...>
-#
-# pry(main)> cruiser = Ship.new("Cruiser", 3)
-# # => #<Ship:0x00007f84f0ad4fb8...>
-#
-# pry(main)> cell_2.place_ship(cruiser)
-#
-# pry(main)> cell_2.render
-# # => "."
+  def test_cell_can_render_when_ship_placed
+    @cell_2.place_ship(@cruiser)
+    assert_equal ".", @cell_2.render
+    assert_equal "S", @cell_2.render(true)
+  end
+
+  # def test_cell_can_render_when_ship_is_hit
+  #   @cell_2.place_ship(@cruiser)
+  #   @cell_2.fire_upon
+  #   assert_equal "H", @cell_2.render(true)
+  # end
+
 #
 # # Indicate that we want to show a ship with the optional argument
 # pry(main)> cell_2.render(true)
