@@ -33,6 +33,5 @@ class Cell
     return "M" if @fired_upon == true && empty? == true
     return "S" if empty? == false && show_ship == true
     return "." if @fired_upon == false
-
   end
 end
