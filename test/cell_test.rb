@@ -48,7 +48,7 @@ class CellTest < Minitest::Test
     assert_equal true, @cell_1.fired_upon?
   end
 
-  def test_cell_can_be_rendered    
+  def test_cell_can_be_rendered
     assert_equal ".", @cell_1.render
     @cell_1.fire_upon
     assert_equal "M", @cell_1.render
@@ -82,6 +82,7 @@ class CellTest < Minitest::Test
     @cell_2.fire_upon
     @cell_2.fire_upon
     assert_equal true, @cruiser.sunk?
+    require "pry"; binding.pry
     assert_equal "X", @cell_2.render
   end
 end
