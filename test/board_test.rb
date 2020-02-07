@@ -36,30 +36,15 @@ class BoardTest < MiniTest::Test
     assert_equal true, @board.valid_placement?(@submarine, ["A2", "A3"])
     assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
   end
+
+  # def test_that_coordinates_must_be_consecutive
+  #   assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
+  #   assert_equal false, @board.valid_placement?(@submarine, ["A1", "C1"])
+  #   assert_equal false, @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
+  #   assert_equal false, @board.valid_placement?(@submarine, ["C1", "B1"])
+  # end
+
 end
-# First, the number of coordinates in the array should be the same as the length of the ship:
-#
-# pry(main)> board.valid_placement?(cruiser, ["A1", "A2"])
-# # => false
-#
-# pry(main)> board.valid_placement?(submarine, ["A2", "A3", "A4"])
-# # => false
-
-
-# Next, make sure the coordinates are consecutive:
-#
-# pry(main)> board.valid_placement?(cruiser, ["A1", "A2", "A4"])
-# # => false
-#
-# pry(main)> board.valid_placement?(submarine, ["A1", "C1"])
-# # => false
-#
-# pry(main)> board.valid_placement?(cruiser, ["A3", "A2", "A1"])
-# # => false
-#
-# pry(main)> board.valid_placement?(submarine, ["C1", "B1"])
-# # => false
-
 
 # Finally, coordinates can’t be diagonal:
 #
