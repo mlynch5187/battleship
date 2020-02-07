@@ -56,5 +56,6 @@ class Board
         number_array << element[1]
       end
     number_array
+    require "pry"; binding.pry
   end
 end
