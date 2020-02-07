@@ -48,7 +48,7 @@ class CellTest < Minitest::Test
     assert_equal true, @cell_1.fired_upon?
   end
 
-  def test_cell_can_be_rendered
+  def test_cell_can_be_rendered    
     assert_equal ".", @cell_1.render
     @cell_1.fire_upon
     assert_equal "M", @cell_1.render
@@ -60,32 +60,28 @@ class CellTest < Minitest::Test
     assert_equal "S", @cell_2.render(true)
   end
 
-  # def test_cell_can_render_when_ship_is_hit
-  #   @cell_2.place_ship(@cruiser)
-  #   @cell_2.fire_upon
-  #   assert_equal "H", @cell_2.render(true)
-  # end
+  def test_cell_can_render_when_ship_is_hit
+    @cell_2.place_ship(@cruiser)
+    @cell_2.fire_upon
+    assert_equal "H", @cell_2.render(true)
+  end
 
-#
-# # Indicate that we want to show a ship with the optional argument
-# pry(main)> cell_2.render(true)
-# # => "S"
-#
-# pry(main)> cell_2.fire_upon
-#
-# pry(main)> cell_2.render
-# # => "H"
-#
-# pry(main)> cruiser.sunk?
-# # => false
-#
-# pry(main)> cruiser.hit
-#
-# pry(main)> cruiser.hit
-#
-# pry(main)> cruiser.sunk?
-# # => true
-#
-# pry(main)> cell_2.render
-# # => "X"
+  def test_ships_can_be_sunk
+    @cell_2.place_ship(@cruiser)
+    assert_equal false, @cruiser.sunk?
+    @cell_2.fire_upon
+    @cell_2.fire_upon
+    @cell_2.fire_upon
+
+    assert_equal true, @cruiser.sunk?
+  end
+
+  def test_cell_can_render_sunken_ship
+    @cell_2.place_ship(@cruiser)
+    @cell_2.fire_upon
+    @cell_2.fire_upon
+    @cell_2.fire_upon
+    assert_equal true, @cruiser.sunk?
+    assert_equal "X", @cell_2.render
+  end
 end
