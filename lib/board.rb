@@ -27,13 +27,34 @@ class Board
   def valid_placement?(ship, coordinates)
     if ship.length == coordinates.length
       true
-        # if ship.length < coordinates.length
-        #   true
-        # else
-        #   false
-        # end
     else
       false
     end
+  end
+
+  def split_consecutive_letters(coordinates)
+    split_array = []
+    coordinates.each do |coordinate|
+      split_array << coordinate.split(//)
+    end
+    split_array
+    letter_array = []
+      split_array.each do |element|
+        letter_array << element[0]
+      end
+    letter_array
+  end
+
+  def split_consecutive_numbers(coordinates)
+    split_array = []
+    coordinates.each do |coordinate|
+      split_array << coordinate.split(//)
+    end
+    split_array
+    number_array = []
+      split_array.each do |element|
+        number_array << element[1]
+      end
+    number_array
   end
 end
