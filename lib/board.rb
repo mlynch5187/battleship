@@ -25,15 +25,69 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.length
-      true
-        # if ship.length < coordinates.length
-        #   true
-        # else
-        #   false
-        # end
-    else
-      false
+    (ship.length == coordinates.length) && (consecutive_placement?(ship, coordinates) == true)
+    #straight_placement?(coordinates) == true
+  end
+
+  def consecutive_placement?(ship, coordinates)
+    length = ship.length
+    letters = []
+    numbers = []
+    consecutive_letters = []
+    same_letters = []
+    consecutive_numbers = []
+    same_numbers = []
+    letters_verify = false
+    numbers_verify = false
+    splitted_coordinates = []
+    # Split Coordinates
+    coordinates.each do |coordinate|
+      splitted_coordinates << coordinate.split(//)
     end
+    # Organize coordinates
+    splitted_coordinates.each do |coordinate_pair|
+      letters << coordinate_pair[0]
+      numbers << coordinate_pair[1]
+    end
+    # Create ideal sets to compare
+    length.times do |length|
+      same_letters << letters[0]
+    end
+
+    letter = letters[0]
+    length.times do |length|
+      consecutive_letters << letter
+      letter = letter.next
+    end
+
+
+    length.times do |length|
+      same_numbers << numbers[0]
+    end
+
+    number = numbers.sort[0]
+    length.times do |length|
+      consecutive_numbers << number
+      number = number.next
+    end
+
+    if (letters == consecutive_letters) || (letters == same_letters)
+      letters_verify = true
+    end
+
+    if (numbers == consecutive_numbers.sort) || (numbers == same_numbers)
+       numbers_verify = true
+    end
+    #compare_coordinates(letters, numbers)
+    split_coordinates(coordinates)
+    letters_verify == true && numbers_verify == true
+  end
+
+  def split_coordinates(coordinates)
+    
+  end
+
+  def organize_coordinates(coordinates)
+
   end
 end
