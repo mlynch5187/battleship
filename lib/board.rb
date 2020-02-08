@@ -40,37 +40,36 @@ class Board
     letters_verify = false
     numbers_verify = false
     splitted_coordinates = []
-    # Split Coordinates
-    coordinates.each do |coordinate|
+    # Split Coordinates from pair into arrays
+    coordinates.map do |coordinate|
       splitted_coordinates << coordinate.split(//)
     end
-    # Organize coordinates
+
     splitted_coordinates.each do |coordinate_pair|
       letters << coordinate_pair[0]
       numbers << coordinate_pair[1]
     end
-    # Create ideal sets to compare
-    length.times do |length|
-      same_letters << letters[0]
-    end
 
-    letter = letters[0]
+    # Creates comparison arrays of letters, and array of numbers from coordinates
+    letter = letters.sort[0]
+    number = numbers.sort[0]
+
+    length.times do |length|
+      same_letters << letter
+    end
     length.times do |length|
       consecutive_letters << letter
       letter = letter.next
     end
-
-
     length.times do |length|
-      same_numbers << numbers[0]
+      same_numbers << number
     end
-
-    number = numbers.sort[0]
     length.times do |length|
       consecutive_numbers << number
       number = number.next
     end
 
+    ##### Compariing to consecutive/identical arrays
     if (letters == consecutive_letters) || (letters == same_letters)
       letters_verify = true
     end
@@ -78,16 +77,12 @@ class Board
     if (numbers == consecutive_numbers.sort) || (numbers == same_numbers)
        numbers_verify = true
     end
-    #compare_coordinates(letters, numbers)
-    split_coordinates(coordinates)
-    letters_verify == true && numbers_verify == true
+    #Returns false if diagonal, checks consecutive and returns boolean
+    if (letters == consecutive_letters) == (numbers == consecutive_numbers.sort)
+      return false
+    else
+      letters_verify == true && numbers_verify == true
+    end
   end
 
-  def split_coordinates(coordinates)
-    
-  end
-
-  def organize_coordinates(coordinates)
-
-  end
 end
