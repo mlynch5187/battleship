@@ -25,8 +25,16 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-   (ship.length == coordinates.length) && (consecutive_placement?(ship, coordinates) == true)
- end
+    open = coordinates.all? do |coordinate|
+      @cells[coordinate].empty?
+    end
+
+    if open
+      (ship.length == coordinates.length) && (consecutive_placement?(ship, coordinates) == true)
+    else
+      false
+    end
+  end
 
  def consecutive_placement?(ship, coordinates)
    @length = ship.length
