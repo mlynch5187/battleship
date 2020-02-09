@@ -25,37 +25,78 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.length
-      true
-    else
-      false
-    end
-  end
+   (ship.length == coordinates.length) && (consecutive_placement?(ship, coordinates) == true)
+ end
 
-  def split_consecutive_letters(coordinates)
-    split_array = []
-    coordinates.each do |coordinate|
-      split_array << coordinate.split(//)
-    end
-    split_array
-    letter_array = []
-      split_array.each do |element|
-        letter_array << element[0]
-      end
-    letter_array
-  end
+ def consecutive_placement?(ship, coordinates)
+   @length = ship.length
+   @letters = []
+   @numbers = []
+   @consecutive_letters = []
+   @same_letters = []
+   @consecutive_numbers = []
+   @same_numbers = []
+   @letters_verify = false
+   @numbers_verify = false
+   @splitted_coordinates = []
 
-  def split_consecutive_numbers(coordinates)
-    split_array = []
-    coordinates.each do |coordinate|
-      split_array << coordinate.split(//)
-    end
-    split_array
-    number_array = []
-      split_array.each do |element|
-        number_array << element[1]
-      end
-    number_array
-    require "pry"; binding.pry
-  end
+   split_coordinates(coordinates)
+   sort_coordinates
+   compare_and_verify_coordinates
+ end
+
+ def split_coordinates(coordinates)
+   coordinates.map do |coordinate|
+     @splitted_coordinates << coordinate.split(//)
+   end
+
+   @splitted_coordinates.each do |coordinate_pair|
+     @letters << coordinate_pair[0]
+     @numbers << coordinate_pair[1]
+   end
+ end
+
+ def sort_coordinates
+   @letter = @letters.sort[0]
+   @number = @numbers.sort[0]
+
+   @length.times do |length|
+     @same_letters << @letter
+   end
+   @length.times do |length|
+     @consecutive_letters << @letter
+     @letter = @letter.next
+   end
+   @length.times do |length|
+     @same_numbers << @number
+   end
+   @length.times do |length|
+     @consecutive_numbers << @number
+     @number = @number.next
+   end
+ end
+
+ def compare_and_verify_coordinates
+   if (@letters == @consecutive_letters) || (@letters == @same_letters)
+     @letters_verify = true
+   end
+
+   if (@numbers == @consecutive_numbers.sort) || (@numbers == @same_numbers)
+      @numbers_verify = true
+   end
+
+   if (@letters == @consecutive_letters) == (@numbers == @consecutive_numbers.sort)
+     return false
+   else
+     return @letters_verify == true && @numbers_verify == true
+   end
+ end
+
+ def place(ship, coordinates)
+   if valid_placement?(ship, coordinates)
+     coordinates.each do |coordinate|
+       @cells[coordinate].place_ship(ship)
+     end
+   end
+ end
 end
