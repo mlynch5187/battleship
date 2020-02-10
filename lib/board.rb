@@ -26,6 +26,7 @@ class Board
 
   def valid_placement?(ship, coordinates)
     open = coordinates.all? do |coordinate|
+      require "pry"; binding.pry
       @cells[coordinate].empty?
     end
 
@@ -93,7 +94,7 @@ class Board
       @numbers_verify = true
    end
 
-   if (@letters == @consecutive_letters) == (@numbers == @consecutive_numbers.sort)
+   if (@letters == @consecutive_letters) && (@numbers == @consecutive_numbers.sort)
      return false
    else
      return @letters_verify == true && @numbers_verify == true
