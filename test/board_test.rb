@@ -10,7 +10,6 @@ class BoardTest < MiniTest::Test
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-    @submarine_2 = Ship.new("Submarine", 2)
     @cell_1 = @board.cells["A1"]
     @cell_2 = @board.cells["A2"]
     @cell_3 = @board.cells["A3"]
@@ -45,7 +44,7 @@ class BoardTest < MiniTest::Test
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "C1"])
     assert_equal false, @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
-    assert_equal true, @board.valid_placement?(@submarine, ["C1", "B1"])
+    assert_equal false, @board.valid_placement?(@submarine, ["C1", "B1"])
     assert_equal true, @board.valid_placement?(@cruiser, ["B1", "B2", "B3"])
     assert_equal true, @board.valid_placement?(@submarine, ["C1", "D1"])
   end
@@ -69,10 +68,7 @@ class BoardTest < MiniTest::Test
   def test_that_ships_cannot_overlap_cells
     @board.place(@cruiser, ["A1", "A2", "A3"])
     @board.place(@submarine, ["A1", "B1"])
-    @board.place(@submarine_2, ["B3", "B4"])
-
-    assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
+    
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "B1"])
-    assert_equal true, @board.valid_placement?(@submarine_2, ["B3", "B4"])
   end
 end
