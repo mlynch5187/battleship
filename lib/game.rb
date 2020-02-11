@@ -19,7 +19,7 @@ class Game
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit"
 
-    user_response = user_answer
+    user_response = @user_answer
 
     if user_response == "p"
       play
@@ -51,6 +51,10 @@ class Game
   def place_user_ships(ship)
     puts @user_board.render(true)
     puts "Enter the coordinates for #{ship.name}. Remember it takes up #{ship.length} units."
+  end
+
+  def play
+
   end
 
 end
