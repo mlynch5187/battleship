@@ -6,7 +6,6 @@ class Game
   attr_reader :user_answer, :computer_board, :user_board
 
   def initialize()
-    @user_answer = gets.chomp
     @computer_board = Board.new
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_submarine = Ship.new("Submarine", 2)
@@ -19,7 +18,7 @@ class Game
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit"
 
-    user_response = @user_answer
+    user_response = gets.chomp
 
     if user_response == "p"
       play
@@ -57,4 +56,5 @@ class Game
 
   end
 
+end
 end
