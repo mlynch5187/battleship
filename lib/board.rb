@@ -93,7 +93,7 @@ class Board
       @numbers_verify = true
    end
 
-   if (@letters == @consecutive_letters) == (@numbers == @consecutive_numbers.sort)
+   if (@letters == @consecutive_letters) && (@numbers == @consecutive_numbers.sort)
      return false
    else
      return @letters_verify == true && @numbers_verify == true
@@ -106,5 +106,13 @@ class Board
        @cells[coordinate].place_ship(ship)
      end
    end
+ end
+
+ def render(show_ship = false)
+   "  1 2 3 4  \n" +
+    "A " + @cells["A1"].render(show_ship) + " " + @cells["A2"].render(show_ship) + " " + @cells["A3"].render(show_ship) + " " + @cells["A4"].render(show_ship) + "\n" +
+    "B " + @cells["B1"].render(show_ship) + " " + @cells["B2"].render(show_ship) + " " + @cells["B3"].render(show_ship) + " " + @cells["B4"].render(show_ship) + "\n" +
+    "C " + @cells["C1"].render(show_ship) + " " + @cells["C2"].render(show_ship) + " " + @cells["C3"].render(show_ship)+ " " + @cells["C4"].render(show_ship) + "\n" +
+    "D " + @cells["D1"].render(show_ship) + " " + @cells["D2"].render(show_ship) + " " + @cells["D3"].render(show_ship) + " " + @cells["D4"].render(show_ship) + "\n"
  end
 end
