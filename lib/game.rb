@@ -40,12 +40,13 @@ class Game
 
   def restart_game
     puts "Wanna play again?"
+    puts "Press the p key to play again, or press the q key to quit."
 
     user_input = gets.chomp.upcase
 
-    if user_input.upcase == "Y"
+    if user_input.upcase == "P"
       start_game
-    elsif user_input.upcase == "N"
+    elsif user_input.upcase == "Q"
       puts "Thanks for playing!"
     else
 
@@ -104,7 +105,7 @@ class Game
 
     human_input = gets.chomp
     user_coordinates = human_input.upcase.split(" ")
-    require "pry"; binding.pry
+
     until @human_board.valid_placement?(ship, user_coordinates)
       puts "Those coordinates are invalid. Please enter valid coordinates!"
       puts "Enter the coordinates for the #{ship.name}. It takes up (#{ship.length} coordinates)"

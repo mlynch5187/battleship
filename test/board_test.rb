@@ -40,30 +40,6 @@ class BoardTest < MiniTest::Test
     assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
   end
 
-  # def test_split_coordinates
-  #   assert_equal [["A", "1"], ["A", "2"]], @board.split_coordinates(["A1", "A2"])
-  #   assert_equal [["A", "1"], ["A", "2"], ["A", "3"]], @board.split_coordinates(["A1", "A2", "A3"])
-  # end
-  #
-  # def test_organize_split_coordinates
-  #   split_coordinates = @board.split_coordinates(["A1", "A2"])
-  #   assert_equal [["A", "A"], ["1", "2"]], @board.organize_split_coordinates(split_coordinates)
-  #   split_coordinates_2 = @board.split_coordinates(["A1", "A2", "A3"])
-  #   assert_equal [["A", "A", "A"], ["1", "2", "3"]], @board.organize_split_coordinates(split_coordinates_2)
-  # end
-  #
-  # def test_create_same_coordinate_pair
-  #   @board.consecutive_placement?(@submarine, ["A1", "A2"])
-  #   @board.split_coordinates(["A1", "A2"])
-  #   assert_equal [["A", "A"], ["1", "1"]], @board.create_same_coordinate_pairs
-  # end
-
-  # def test_create_consecutive_coordinate_pair
-  #   @board.split_coordinates(["A1", "A2"])
-  #   @board.organize_split_coordinates
-  #   assert_equal [["A", "B"], ["1", "2"]], @board.create_consecutive_coordinate_pairs
-  # end
-
   def test_that_coordinates_must_be_consecutive
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "C1"])
