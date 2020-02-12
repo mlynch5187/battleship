@@ -49,11 +49,10 @@ class Game
     elsif user_input.upcase == "Q"
       puts "Thanks for playing!"
     else
-
-    end
       puts "I didn't understand that. Press the y key to play again or the q key to quit."
       restart_game
     end
+  end
 
   def play_game
     place_ai_ships(@ai_cruiser)
@@ -143,28 +142,28 @@ class Game
     @human_board.cells[@ai_targeted_cells].fire_upon
   end
 
-  def shot_results(coordinates_to_fire_upon, coordinates_computer_fires_upon)
-    user_results(coordinates_to_fire_upon)
-    computer_results(coordinates_computer_fires_upon)
+  def shot_results(human_targeted_cells, ai_targeted_cells)
+    user_results(human_targeted_cells)
+    computer_results(ai_targeted_cells)
   end
 
-  def user_results(coordinates_to_fire_upon)
-    if @ai_board.cells[coordinates_to_fire_upon].fired_upon? && @ai_board.cells[coordinates_to_fire_upon].ship == nil
-      puts "Your shot on #{coordinates_to_fire_upon} was a miss"
-    elsif @ai_board.cells[coordinates_to_fire_upon].fired_upon? && @ai_board.cells[coordinates_to_fire_upon].ship.sunk?
-      puts "Your shot on #{coordinates_to_fire_upon} sunk an enemy ship"
+  def user_results(human_targeted_cells)
+    if @ai_board.cells[human_targeted_cells].fired_upon? && @ai_board.cells[human_targeted_cells].ship == nil
+      puts "Your shot on #{human_targeted_cells} was a miss"
+    elsif @ai_board.cells[human_targeted_cells].fired_upon? && @ai_board.cells[human_targeted_cells].ship.sunk?
+      puts "Your shot on #{human_targeted_cells} sunk an enemy ship"
     else
-      puts "Your shot on #{coordinates_to_fire_upon} hit an enemy ship"
+      puts "Your shot on #{human_targeted_cells} hit an enemy ship"
     end
   end
 
-  def computer_results(coordinates_computer_fires_upon)
-    if @human_board.cells[coordinates_computer_fires_upon].fired_upon? && @human_board.cells[coordinates_computer_fires_upon].ship == nil
-      puts "My shot on #{coordinates_computer_fires_upon} was a miss"
-    elsif @human_board.cells[coordinates_computer_fires_upon].fired_upon? && @human_board.cells[coordinates_computer_fires_upon].ship.sunk?
-      puts "My shot on #{coordinates_computer_fires_upon} sunk one of your ships"
+  def computer_results(ai_targeted_cells)
+    if @human_board.cells[ai_targeted_cells].fired_upon? && @human_board.cells[ai_targeted_cells].ship == nil
+      puts "My shot on #{ai_targeted_cells} was a miss"
+    elsif @human_board.cells[ai_targeted_cells].fired_upon? && @human_board.cells[ai_targeted_cells].ship.sunk?
+      puts "My shot on #{ai_targeted_cells} sunk one of your ships"
     else
-      puts "My shot on #{coordinates_computer_fires_upon} hit one of your ships"
+      puts "My shot on #{ai_targeted_cells} hit one of your ships"
     end
   end
 
