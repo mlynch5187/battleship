@@ -91,20 +91,30 @@ class Board
  end
 
  def compare_and_verify_coordinates
-   if (@letters == @consecutive_letters) || (@letters == @same_letters)
-     @letters_verify = true
-   end
-
-   if (@numbers == @consecutive_numbers.sort) || (@numbers == @same_numbers)
-      @numbers_verify = true
-   end
-
-   if (@letters == @consecutive_letters) && (@numbers == @consecutive_numbers.sort)
-     return false
-   else
-     return @letters_verify == true && @numbers_verify == true
-   end
+   letters_verify?
+   numbers_verify?
+   not_diagonal?
  end
+
+  def letters_verify?
+    if (@letters == @consecutive_letters) || (@letters == @same_letters)
+      @letters_verify = true
+    end
+  end
+
+  def numbers_verify?
+    if (@numbers == @consecutive_numbers.sort) || (@numbers == @same_numbers)
+       @numbers_verify = true
+    end
+  end
+
+  def not_diagonal?
+    if (@letters == @consecutive_letters) && (@numbers == @consecutive_numbers.sort)
+      return false
+    else
+      return @letters_verify == true && @numbers_verify == true
+    end
+  end
 
  def place(ship, coordinates)
    if valid_placement?(ship, coordinates)
