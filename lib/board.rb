@@ -49,7 +49,9 @@ class Board
    @splitted_coordinates = []
 
    split_coordinates(coordinates)
-   sort_coordinates
+   organize_split_coordinates
+   create_same_coordinate_pairs
+   create_consecutive_coordinate_pairs
    compare_and_verify_coordinates
  end
 
@@ -57,31 +59,35 @@ class Board
    coordinates.map do |coordinate|
      @splitted_coordinates << coordinate.split(//)
    end
+ end
 
+ def organize_split_coordinates
    @splitted_coordinates.each do |coordinate_pair|
      @letters << coordinate_pair[0]
      @numbers << coordinate_pair[1]
    end
+   [@letters, @numbers]
  end
 
- def sort_coordinates
+ def create_same_coordinate_pairs
    @letter = @letters.sort[0]
    @number = @numbers.sort[0]
 
    @length.times do |length|
      @same_letters << @letter
+     @same_numbers << @number
    end
+   [@same_letters, @same_numbers]
+ end
+
+ def create_consecutive_coordinate_pairs
    @length.times do |length|
      @consecutive_letters << @letter
      @letter = @letter.next
-   end
-   @length.times do |length|
-     @same_numbers << @number
-   end
-   @length.times do |length|
      @consecutive_numbers << @number
      @number = @number.next
    end
+   [@consecutive_letters, @consecutive_numbers]
  end
 
  def compare_and_verify_coordinates
