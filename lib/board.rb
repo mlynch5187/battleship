@@ -48,31 +48,46 @@ class Board
    @numbers_verify = false
    @splitted_coordinates = []
 
-   split_coordinates(coordinates)
-   organize_split_coordinates
-   create_same_coordinate_pairs
-   create_consecutive_coordinate_pairs
-   compare_and_verify_coordinates
+   splitted_coordinates = split_coordinates(coordinates)
+   organized_coordinates = organize_split_coordinates(splitted_coordinates)
+   compare_and_verify_coordinates(organized_coordinates)
  end
 
  def split_coordinates(coordinates)
    coordinates.map do |coordinate|
-     @splitted_coordinates << coordinate.split(//)
+     coordinate.split(//)
    end
  end
 
- def organize_split_coordinates
-   @splitted_coordinates.each do |coordinate_pair|
+ def organize_split_coordinates(split_coordinates)
+   @letters = []
+   @numbers = []
+   split_coordinates.each do |coordinate_pair|
      @letters << coordinate_pair[0]
      @numbers << coordinate_pair[1]
    end
    [@letters, @numbers]
  end
 
- def create_same_coordinate_pairs
-   @letter = @letters.sort[0]
-   @number = @numbers.sort[0]
+ def compare_and_verify_coordinates(organized_coordinates)
+   @orginal_letters = organized_coordinates[0]
+   @orginal_numbers = organized_coordinates[1]
+   @letter = @orginal_letters.sort[0]
+   @number = @orginal_numbers.sort[0]
+   @length = @orginal_letters.length
+   @same_letters = []
+   @same_numbers = []
+   @consecutive_numbers = []
+   @same_numbers = []
 
+   create_same_coordinate_pairs
+   create_consecutive_coordinate_pairs
+   letters_verify?
+   numbers_verify?
+   not_diagonal?
+ end
+
+ def create_same_coordinate_pairs
    @length.times do |length|
      @same_letters << @letter
      @same_numbers << @number
@@ -88,12 +103,6 @@ class Board
      @number = @number.next
    end
    [@consecutive_letters, @consecutive_numbers]
- end
-
- def compare_and_verify_coordinates
-   letters_verify?
-   numbers_verify?
-   not_diagonal?
  end
 
   def letters_verify?
