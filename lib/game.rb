@@ -12,45 +12,47 @@ class Game
               :human_submarine
 
   def initialize
+    @ai_targeted_cells = ''
     @ai_board = Board.new()
     @ai_cruiser = Ship.new("Cruiser", 3)
     @ai_submarine = Ship.new("Submarine", 2)
+    @human_targeted_cells = ''
     @human_board = Board.new()
     @human_cruiser = Ship.new("Cruiser", 3)
     @human_submarine = Ship.new("Submarine", 2)
-    @coordinates_to_fire_on = ''
-    @coordinates_computer_fires_on = ''
   end
 
   def start_game
-    puts "WELCOME TO BATTLESHIP"
-    puts "Enter p to play. Enter q to quit"
+    puts "================ WELCOME TO BATTLESHIP ================"
+    puts "          Press the p key to play or the q key to quit"
 
     your_response = gets.chomp
-      if your_response.upcase == "P"
-        play_game
-      elsif your_response.upcase == "Q"
-        puts "Thanks for playing!"
-      else
-        puts "Those are invalid coordinates. Try again"
-        start_game
-      end
+
+    if your_response.upcase == "P"
+      play_game
+    elsif your_response.upcase == "Q"
+      puts "Thanks for playing!"
+    else
+      puts "Those are invalid coordinates. Try again"
+      start_game
+    end
   end
 
   def restart_game
-    puts "Would you like to play another round? (y/n)"
+    puts "Wanna play again?"
 
     user_input = gets.chomp.upcase
 
-    if user_input == "Y"
+    if user_input.upcase == "Y"
       start_game
-    elsif user_input == "N"
+    elsif user_input.upcase == "N"
       puts "Thanks for playing!"
     else
-      puts "Invalid input."
+
+    end
+      puts "I didn't understand that. Press the y key to play again or the q key to quit."
       restart_game
     end
-  end
 
   def play_game
     place_ai_ships(@ai_cruiser)
@@ -71,7 +73,7 @@ class Game
       board_rendered
       player_turn
       ai_turn
-      shot_results(@coordinates_to_fire_on, @coordinates_computer_fires_on)
+      shot_results(@human_targeted_cells, @ai_targeted_cells)
     end
       end_game
   end
@@ -102,13 +104,13 @@ class Game
 
     human_input = gets.chomp
     user_coordinates = human_input.upcase.split(" ")
-
+    require "pry"; binding.pry
     until @human_board.valid_placement?(ship, user_coordinates)
-      puts "I didn't recognize those coordinates. Please enter valid coordinates!"
+      puts "Those coordinates are invalid. Please enter valid coordinates!"
       puts "Enter the coordinates for the #{ship.name}. It takes up (#{ship.length} coordinates)"
       puts "Enter your coordinates in order, and without commas"
       human_input = gets.chomp
-      user_coordinates = user_coordinates.upcase.split(" ")
+      user_coordinates = human_input.upcase.split(" ")
     end
 
     @human_board.place(ship, user_coordinates)
@@ -122,22 +124,22 @@ class Game
   def player_turn
     puts "Enter the coordinate for your shot"
 
-    @coordinates_to_fire_on = gets.chomp.upcase
-    until @ai_board.valid_coordinate?(@coordinates_to_fire_on)
+    @human_targeted_cells = gets.chomp.upcase
+    until @ai_board.valid_coordinate?(@human_targeted_cells)
 
       puts "Please enter a valid coordinate:"
 
-      @coordinates_to_fire_on = gets.chomp.upcase
+      @human_targeted_cells = gets.chomp.upcase
     end
-    @ai_board.cells[@coordinates_to_fire_on.upcase].fire_upon
+    @ai_board.cells[@human_targeted_cells.upcase].fire_upon
   end
 
   def ai_turn
-    @coordinates_computer_fires_on = @ai_board.cells.keys.sample
-    until @human_board.cells[@coordinates_computer_fires_on].fired_upon? == false
-      @coordinates_computer_fires_on = @ai_board.cells.keys.sample
+    @ai_targeted_cells = @ai_board.cells.keys.sample
+    until @human_board.cells[@ai_targeted_cells].fired_upon? == false
+      @ai_targeted_cells = @ai_board.cells.keys.sample
     end
-    @human_board.cells[@coordinates_computer_fires_on].fire_upon
+    @human_board.cells[@ai_targeted_cells].fire_upon
   end
 
   def shot_results(coordinates_to_fire_upon, coordinates_computer_fires_upon)
