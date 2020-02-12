@@ -22,7 +22,7 @@ class Game
     @coordinates_computer_fires_on = ''
   end
 
-  def start
+  def start_game
     puts "WELCOME TO BATTLESHIP"
     puts "Enter p to play. Enter q to quit"
 
@@ -30,21 +30,53 @@ class Game
       if your_response.upcase == "P"
         play_game
       elsif your_response.upcase == "Q"
-        start
+        puts "Thanks for playing!"
       else
         puts "Those are invalid coordinates. Try again"
-        start
+        start_game
       end
   end
 
-  def play_game
-    place_computer_ships(@ai_cruiser)
-    place_computer_ships(@ai_submarine)
-    place_user_ships(@human_cruiser)
-    place_user_ships(@human_submarine)
+  def restart_game
+    puts "Would you like to play another round? (y/n)"
+
+    user_input = gets.chomp.upcase
+
+    if user_input == "Y"
+      start_game
+    elsif user_input == "N"
+      puts "Thanks for playing!"
+    else
+      puts "Invalid input."
+      restart_game
+    end
   end
 
-  def place_computer_ships(ship)
+  def play_game
+    place_ai_ships(@ai_cruiser)
+    place_ai_ships(@ai_submarine)
+    place_human_ships(@human_cruiser)
+    place_human_ships(@human_submarine)
+  end
+
+  def board_rendered
+    puts "=============OPPONENT'S BOARD============="
+    puts @ai_board.render
+    puts "==============YOUR BOARD=============="
+    puts @human_board.render(true)
+  end
+
+  def take_turn
+    until @human_cruiser.sunk? && @human_submarine.sunk? || @ai_cruiser.sunk? && @ai_submarine.sunk?
+      board_rendered
+      player_turn
+      ai_turn
+      shot_results(@coordinates_to_fire_on, @coordinates_computer_fires_on)
+    end
+      end_game
+  end
+
+  def place_ai_ships(ship)
     coordinates = []
     if @ai_board.valid_placement?(ship, coordinates)
       @ai_board.place(ship, coordinates)
@@ -56,73 +88,56 @@ class Game
       @ai_board.place(ship, coordinates)
     end
     if ship == @ai_submarine
-      computer_done_placing
-    end
-  end
 
-  def computer_done_placing
     puts "I have laid my ships on the grid."
     puts "You now need to lay out your ships."
     puts "The Cruiser is three units long and the submarine is two units long."
+    end
   end
 
-  def place_user_ships(ship)
+  def place_human_ships(ship)
     puts @human_board.render(true)
-    puts "Enter the squares for the #{ship.name} (#{ship.length} spaces)"
+    puts "Enter the coordinates for the #{ship.name}. It takes (#{ship.length} coordinates)"
     puts "Enter your coordinates in order, and without commas"
-    user_coordinates = gets.chomp
-    user_coordinates_array = user_coordinates.upcase.split(" ")
-    until @human_board.valid_placement?(ship, user_coordinates_array)
-      puts "These are invalid coordinates, please try again!"
-      puts "Enter the squares for the #{ship.name} (#{ship.length} spaces)"
+
+    human_input = gets.chomp
+    user_coordinates = human_input.upcase.split(" ")
+
+    until @human_board.valid_placement?(ship, user_coordinates)
+      puts "I didn't recognize those coordinates. Please enter valid coordinates!"
+      puts "Enter the coordinates for the #{ship.name}. It takes up (#{ship.length} coordinates)"
       puts "Enter your coordinates in order, and without commas"
-      user_coordinates = gets.chomp
-      user_coordinates_array = user_coordinates.upcase.split(" ")
+      human_input = gets.chomp
+      user_coordinates = user_coordinates.upcase.split(" ")
     end
-    @human_board.place(ship, user_coordinates_array)
+
+    @human_board.place(ship, user_coordinates)
+
     if ship.name == "Submarine"
-      player_done_placing
+      puts "I have placed my ships"
+      take_turn
     end
   end
 
-  def player_done_placing
-    puts "I have placed my ships"
-    turn
-  end
-
-  def turn
-    until @human_cruiser.sunk? && @human_submarine.sunk? || @ai_cruiser.sunk? && @ai_submarine.sunk?
-      board_display
-      player_take_turn
-      computer_take_turn
-      shot_results(@coordinates_to_fire_on, @coordinates_computer_fires_on)
-    end
-    game_over
-  end
-
-  def player_take_turn
+  def player_turn
     puts "Enter the coordinate for your shot"
+
     @coordinates_to_fire_on = gets.chomp.upcase
     until @ai_board.valid_coordinate?(@coordinates_to_fire_on)
+
       puts "Please enter a valid coordinate:"
+
       @coordinates_to_fire_on = gets.chomp.upcase
     end
     @ai_board.cells[@coordinates_to_fire_on.upcase].fire_upon
   end
 
-  def computer_take_turn
+  def ai_turn
     @coordinates_computer_fires_on = @ai_board.cells.keys.sample
     until @human_board.cells[@coordinates_computer_fires_on].fired_upon? == false
       @coordinates_computer_fires_on = @ai_board.cells.keys.sample
     end
     @human_board.cells[@coordinates_computer_fires_on].fire_upon
-  end
-
-  def board_display
-    puts "=============OPPONENT'S BOARD============="
-    puts @ai_board.render
-    puts "==============YOUR BOARD=============="
-    puts @human_board.render(true)
   end
 
   def shot_results(coordinates_to_fire_upon, coordinates_computer_fires_upon)
@@ -150,27 +165,14 @@ class Game
     end
   end
 
-  def game_over
-    board_display
+  def end_game
+    board_rendered
     if @human_cruiser.sunk? && @human_submarine.sunk?
         puts "I win. That was too easy. Where'd you learn those lame skills?"
-        new_game
+        restart_game
     else @ai_cruiser.sunk? && @ai_submarine.sunk?
         puts "It looks like you got lucky and found a way to win."
-        new_game
-    end
-  end
-
-  def new_game
-    puts "Would you like to play another round? (y/n)"
-    user_input = gets.chomp.upcase
-    if user_input == "Y"
-      start
-    elsif user_input == "N"
-      puts "Thanks for playing!"
-    else
-      puts "Invalid input."
-      new_game
+        restart_game
     end
   end
 end
