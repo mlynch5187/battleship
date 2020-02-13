@@ -68,7 +68,9 @@ class CellTest < Minitest::Test
 
   def test_ships_can_be_sunk
     @cell_2.place_ship(@cruiser)
+
     assert_equal false, @cruiser.sunk?
+
     @cell_2.fire_upon
     @cell_2.fire_upon
     @cell_2.fire_upon
@@ -81,8 +83,8 @@ class CellTest < Minitest::Test
     @cell_2.fire_upon
     @cell_2.fire_upon
     @cell_2.fire_upon
+
     assert_equal true, @cruiser.sunk?
-    require "pry"; binding.pry
     assert_equal "X", @cell_2.render
   end
 end

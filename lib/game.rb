@@ -23,6 +23,7 @@ class Game
   end
 
   def start_game
+    puts "                                                       "
     puts "================ WELCOME TO BATTLESHIP ================"
     puts "          Press the p key to play or the q key to quit"
 
@@ -33,13 +34,14 @@ class Game
     elsif your_response.upcase == "Q"
       puts "Thanks for playing!"
     else
-      puts "Those are invalid coordinates. Try again"
+      puts "Hi! Me again.. Can you try one more time?"
       start_game
     end
   end
 
   def restart_game
     puts "Wanna play again?"
+    puts "Press 'Y' for (yes) or 'N' for (no), then press enter."
 
     user_input = gets.chomp.upcase
 
@@ -47,12 +49,11 @@ class Game
       start_game
     elsif user_input.upcase == "N"
       puts "Thanks for playing!"
-    else
-
+    elsif user_input.upcase != ("Y" || "N")
+      puts "I didn't understand that."
     end
-      puts "I didn't understand that. Press the y key to play again or the q key to quit."
-      restart_game
-    end
+    restart_game
+  end
 
   def play_game
     place_ai_ships(@ai_cruiser)
@@ -103,20 +104,30 @@ class Game
     puts "Enter your coordinates in order, and without commas"
 
     human_input = gets.chomp
-    user_coordinates = human_input.upcase.split(" ")
-    require "pry"; binding.pry
+    if human_input.match?(/,/)
+      puts "Stop. Read."
+    else
+      user_coordinates = human_input.upcase.split(" ")
+    end
+
     until @human_board.valid_placement?(ship, user_coordinates)
       puts "Those coordinates are invalid. Please enter valid coordinates!"
       puts "Enter the coordinates for the #{ship.name}. It takes up (#{ship.length} coordinates)"
-      puts "Enter your coordinates in order, and without commas"
+      puts "Enter your coordinates in consecutive order, spaced apart without commas. :)"
+
       human_input = gets.chomp
-      user_coordinates = human_input.upcase.split(" ")
+      if human_input.match?(/,/)
+        puts "Stop. Read."
+      else
+        user_coordinates = human_input.upcase.split(" ")
+      end
     end
 
     @human_board.place(ship, user_coordinates)
 
     if ship.name == "Submarine"
-      puts "I have placed my ships"
+      puts "You have succesfully placed your ships!"
+      puts "Let's play!"
       take_turn
     end
   end
@@ -170,10 +181,18 @@ class Game
   def end_game
     board_rendered
     if @human_cruiser.sunk? && @human_submarine.sunk?
-        puts "I win. That was too easy. Where'd you learn those lame skills?"
-        restart_game
+        puts "I win. And I have no idea what I am doing."
+        puts "That was too easy. Where'd you learn those lame skills?"
+        puts "I honestly don't want to play again. I need something more challenging."
     else @ai_cruiser.sunk? && @ai_submarine.sunk?
-        puts "It looks like you got lucky and found a way to win."
+        puts "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_"
+        puts "                         _______________                           "
+        puts "-!-!-!-!-!-!-!-!-!-!-!-!   GAME   OVER   -!-!-!-!-!-!-!-!-!-!-!-!-!"
+        puts "                         ---------------                           "
+        puts "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_"
+        puts "Well excuse me! It looks like you got lucky and found a way to win."
+        puts "Another round shall we?"
+        puts "\/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/   \/"
         restart_game
     end
   end
