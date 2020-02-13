@@ -26,12 +26,14 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    open = coordinates.all? do |coordinate|
-      @cells[coordinate].empty?
+    if ship.length == coordinates.length
+      open = coordinates.all? do |coordinate|
+        @cells[coordinate].empty?
+      end
     end
-
+    
     if open
-      (ship.length == coordinates.length) && (consecutive_placement?(ship, coordinates) == true)
+       consecutive_placement?(ship, coordinates) == true
     else
       false
     end
